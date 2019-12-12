@@ -6,6 +6,7 @@
 #include <any>
 #include <map>
 #include <vector>
+#include <string>
 #include <cstdio>
 #include <cstdlib>
 #include <fstream>
@@ -21,19 +22,20 @@ using std::any;
 
 class Json {
 public:
-    Json (const string& s);
-    bool is_array (const string &str) const;
-    bool is_object (const string &str) const;
+    explicit Json(const string& s);
+    bool is_array(const string &str) const;
+    bool is_object(const string &str) const;
     any& operator[] (const string& key);
     any& operator[] (int index);
 
 private:
-    string make_it_without_tabs (string& str);
-    string get_key (string& str);
+    string make_it_without_tabs(string& str);
+    string get_key(string& str);
+
 public:
     any parse_object_get_value(string& s);
 
-    static Json parse (const std::string& s)
+    static Json parse(const std::string& s)
     {
         string str;
         try
@@ -41,7 +43,7 @@ public:
             Json JSON(s);
             str.assign(s, 1, s.length()-2);
 
-            while (str.length()>5)
+            while (str.length() > 5)
             {
                 try
                 {
@@ -65,7 +67,7 @@ public:
         }
     }
 
-    static Json parseFile (const string& path_to_file)
+    static Json parseFile(const string& path_to_file)
     {
         std::ifstream JSON_file(path_to_file);
         string s;

@@ -72,16 +72,14 @@ std::string Json::get_key(std::string& str){
     //cout << "get key: ";
     if (str.find("\"") != string::npos){
         str.erase(0, str.find("\"")+1);
-        if(str.find("\"") != string::npos){
+        if (str.find("\"") != string::npos){
             string key = str.substr(0, str.find("\""));
             str.erase(0, str.find("\"")+1);
             //cout << key << " ";
             return key;
-        }
-        else
+        } else
             throw std::bad_any_cast();
-    }
-    else
+    } else
         throw std::bad_any_cast();
 }
 
@@ -137,7 +135,7 @@ std::any Json::parse_object_get_value(std::string& s){
     {
         pre_value.assign(pre_value, pre_value.find("\""),
                           pre_value.length()-2);
-        while (pre_value.length()>5)
+        while (pre_value.length() > 5)
         {
             try
             {
@@ -155,7 +153,7 @@ std::any Json::parse_object_get_value(std::string& s){
                 {
                     value = -1;
                     return value;
-                } else if(Error == "No objects value for the last key!") {
+                } else if (Error == "No objects value for the last key!") {
                     value = -1;
                     return value;
                 }
@@ -194,8 +192,8 @@ std::any Json::parse_object_get_value(std::string& s){
                          pre_value.rfind("\"")-1);
         value = pre_value;
         //cout << "\"" << pre_value << "\"";
-    } else if ((pre_value[0]>=NUM_ST)&&
-              (pre_value[pre_value.length()-1]<=NUM_FIN)) {
+    } else if ((pre_value[0] >= NUM_ST)&&
+              (pre_value[pre_value.length()-1] <= NUM_FIN)) {
         value = atof(pre_value.c_str());
         //cout << "<" << any_cast<double>(value) << ">";
     } else if ((pre_value == "true") || (pre_value == "false")) {
