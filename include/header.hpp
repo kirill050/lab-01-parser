@@ -40,10 +40,38 @@ public:
         string str;
         try
         {
-            if (json_string.length() == 0)
+            Json JSON(s);
+            str.assign(s, 1, s.length()-2);
+
+            while (str.length() > 5)
             {
-                Json JSON(s);
+                try
+                {
+                    string key = JSON.get_key(str);
+                    JSON._parsed_json[key] =
+                                       JSON.parse_object_get_value(str);
+                    //cout << endl;
+                }
+                catch (string Error)
+                {
+                    //cout << endl << "Error occured: " << Error << endl;
+                    break;
+                }
             }
+            return JSON;
+        }
+        catch (std::bad_any_cast())
+        {
+            cout << "This is not a Json-object or Json-array!" << endl;
+            return Json(string(""));
+        }
+    }
+
+    static Json parse(const Json& JSON)
+    {
+        string str;
+        try
+        {
             str.assign(s, 1, s.length()-2);
 
             while (str.length() > 5)

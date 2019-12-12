@@ -4,7 +4,7 @@
 Json::Json(const string& s)
 {
     json_string = s;
-    this->parse(s);
+    Json.parse(*this);
 }
 
 // The method returns true if this instance contains a JSON array.
