@@ -67,12 +67,13 @@ public:
         }
     }
 
-    static Json parse(const Json& JSON)
+    static Json parse(Json& JSON)
     {
         string str;
         try
         {
-            str.assign(s, 1, s.length()-2);
+            str.assign(JSON.json_string, 1,
+                       JSON.json_string.length()-2);
 
             while (str.length() > 5)
             {
