@@ -3,6 +3,7 @@
 // Constructor from a string containing Json data.
 Json::Json(const string& s)
 {
+    json_string = s;
     this->parse(s);
 }
 

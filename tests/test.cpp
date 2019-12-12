@@ -10,8 +10,10 @@
 #include <sstream>
 #include <fstream>
 
+using std::string;
+
 TEST(Parse, Text){
-std::string json = "{\n"
+string json = "{\n"
                    "    \"lastname\" : \"Ivanov\",\n"
                    "    \"firstname\" : \"Ivan\",\n"
                    "    \"age\" : 25,\n"

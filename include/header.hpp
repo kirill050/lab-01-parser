@@ -40,7 +40,10 @@ public:
         string str;
         try
         {
-            Json JSON(s);
+            if (json_string.length() == 0)
+            {
+                Json JSON(s);
+            }
             str.assign(s, 1, s.length()-2);
 
             while (str.length() > 5)
