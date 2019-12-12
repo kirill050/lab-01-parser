@@ -63,7 +63,7 @@ public:
         catch (std::bad_any_cast())
         {
             cout << "This is not a Json-object or Json-array!" << endl;
-            return Json();
+            return Json(string(""));
         }
     }
 
