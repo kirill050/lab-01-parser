@@ -1,0 +1,5 @@
+#!/bin/bash
+
+sed 's/\t/    /g' header.hpp > header1.hpp
+rm header.hpp
+mv header1.hpp header.hpp
