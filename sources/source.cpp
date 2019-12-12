@@ -81,7 +81,15 @@ std::string Json::get_key(std::string& str){
             throw std::bad_any_cast();
         }
     } else {
-        throw std::bad_any_cast();
+        str.erase(0, str.find("\"")+1);
+        if (str.find("\"") != string::npos){
+            string key = str.substr(0, str.find("\""));
+            str.erase(0, str.find("\"")+1);
+            //cout << key << " ";
+            return key;
+        } else {
+            throw std::bad_any_cast();
+        }
     }
 }
 
@@ -133,7 +141,7 @@ std::any Json::parse_object_get_value(std::string& s){
         s = "";
     }
 
-    if (pre_value[0] == '{')
+    if (is_object(pre_value))//pre_value[0] == '{')
     {
         pre_value.assign(pre_value, pre_value.find("\""),
                           pre_value.length()-2);
@@ -162,7 +170,8 @@ std::any Json::parse_object_get_value(std::string& s){
             }
             catch (...)
             {
-                //cout << endl << "Error occured: "; exit(-12);
+                value = -1;
+                return value;
             }
         }
     } else if (is_array(pre_value)) {
