@@ -1,6 +1,5 @@
 // Copyright 2019 Kirill <your_email>
 #include "header.hpp"
-//kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
 // Constructor from a string containing Json data.
 Json::Json(const string& s)
 {
@@ -77,10 +76,12 @@ std::string Json::get_key(std::string& str){
             str.erase(0, str.find("\"")+1);
             //cout << key << " ";
             return key;
-        } else
+        } else {
             throw std::bad_any_cast();
-    } else
+        }
+    } else {
         throw std::bad_any_cast();
+    }
 }
 
 std::any Json::parse_object_get_value(std::string& s){
