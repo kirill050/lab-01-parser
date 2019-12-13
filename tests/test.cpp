@@ -37,7 +37,8 @@ Json object("{\n"
     EXPECT_EQ(std::any_cast<double>(marks[0]), 4);
     EXPECT_EQ(std::any_cast<double>(marks[1]), 5);
 
-    auto address = std::any_cast<Json>(object["address"]);
+    auto address = std::any_cast<std::map<std::string,
+                                   std::any>>(object["address"]);
     EXPECT_EQ(std::any_cast<std::string>(address["city"]), "Moscow");
     EXPECT_EQ(std::any_cast<std::string>(address["street"]),
                "Vozdvijenka");

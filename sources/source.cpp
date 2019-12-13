@@ -149,37 +149,37 @@ std::any Json::parse_object_get_value(std::string& s){
     {
         pre_value.assign(pre_value, pre_value.find("\""),
                           pre_value.length()-2);
-        Json sub_object(pre_value);
-        value = sub_object;
-//        while (pre_value.length() > 5)
-//        {
-//            try
-//            {
-//                string key = get_key(pre_value);
-//                string find_here_a_value;
-//
-//                map <string, any> MAP =
-//                               {{key, parse_object_get_value(pre_value)}};
-//                value = MAP;
-//            }
-//            catch (string Error)
-//            {
-//                //cout << endl << "Error occured: " << Error << endl;
-//                if (Error == "No keys!")
-//                {
-//                    value = -1;
-//                    return value;
-//                } else if (Error == "No objects value for the last key!") {
-//                    value = -1;
-//                    return value;
-//                }
-//            }
-//            catch (...)
-//            {
-//                value = -1;
-//                return value;
-//            }
-//        }
+        //Json sub_object(pre_value);
+        //value = sub_object;
+        map <string, any> MAP;
+        while (pre_value.length() > 5)
+        {
+            try
+            {
+                string key = get_key(pre_value);
+                string find_here_a_value;
+
+                MAP[key] = parse_object_get_value(pre_value);
+                value = MAP;
+            }
+            catch (string Error)
+            {
+                //cout << endl << "Error occured: " << Error << endl;
+                if (Error == "No keys!")
+                {
+                    value = -1;
+                    return value;
+                } else if (Error == "No objects value for the last key!") {
+                    value = -1;
+                    return value;
+                }
+            }
+            catch (...)
+            {
+                value = -1;
+                return value;
+            }
+        }
     } else if (is_array(pre_value)) {
         pre_value.assign(pre_value, pre_value.find("[")+1,
                          pre_value.rfind('\n')-1);
