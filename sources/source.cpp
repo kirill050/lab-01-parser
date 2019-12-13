@@ -216,7 +216,7 @@ std::any Json::parse_object_get_value(std::string& s){
         else
             throw std::invalid_argument("A");
     } else {
-        throw std::bad_function_call;
+        throw std::bad_cast();
     }
 
     return value;
