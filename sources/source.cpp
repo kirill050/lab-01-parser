@@ -151,7 +151,7 @@ std::any Json::parse_object_get_value(std::string& s){
                           pre_value.length()-2);
         //Json sub_object(pre_value);
         //value = sub_object;
-        map <string, any> MAP;
+        map <string, string> MAP;
         while (pre_value.length() > 5)
         {
             try
