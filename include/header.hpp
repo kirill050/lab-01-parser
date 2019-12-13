@@ -122,5 +122,6 @@ public:
 public:
     std::string json_string;
     std::map <std::string, std::any> _parsed_json;
+    //std::vector <std::any> Array;
 };
 #endif // INCLUDE_HEADER_HPP_
