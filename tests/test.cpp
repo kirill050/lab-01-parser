@@ -26,24 +26,24 @@ Json object("{\n"
                    "        \"street\" : \"Vozdvijenka\"\n"
                    "    }\n"
                    "}");
-EXPECT_EQ(std::any_cast<std::string>(object["lastname"]),
-"Ivanov");
-EXPECT_EQ(std::any_cast<bool>(object["islegal"]),
-false);
-EXPECT_EQ(std::any_cast<double>(object["age"]),
-25);
+//try
+//{
+    EXPECT_EQ(object["lastname"], "Ivanov");
+    EXPECT_EQ(object["islegal"], false);
+    EXPECT_EQ(object["age"], 25);
 
-auto marks = std::any_cast<Json>(object["marks"]);
-EXPECT_EQ(std::any_cast<double>(marks[0]),
-4);
-EXPECT_EQ(std::any_cast<double>(marks[1]),
-5);
+    auto marks = object["marks"];
+    EXPECT_EQ(marks[0], 4);
+    EXPECT_EQ(marks[1], 5);
 
-auto address = std::any_cast<Json>(object["address"]);
-EXPECT_EQ(std::any_cast<std::string>(address["city"]),
-"Moscow");
-EXPECT_EQ(std::any_cast<std::string>(address["street"]),
-"Vozdvijenka");
+    auto address = object["address"];
+    EXPECT_EQ(address["city"], "Moscow");
+    EXPECT_EQ(address["street"], "Vozdvijenka");
+//}
+//catch (std::bad_any_cast& e)
+//{
+//    cout << "Bad any cast!";
+//}
 }
 
 int main(int argc, char **argv) {
