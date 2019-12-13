@@ -37,14 +37,18 @@ any& Json::operator[](const string& key)
         //any_cast<const std::string&>(_parsed_json[key]);
     } else if (_parsed_json[key].type() == typeid(double)) {
         return _parsed_json[key];
-    } else if (_parsed_json[key].type() == typeid(bool)) {
+    } else if (_parsed_json[key].type() == typeid(int)) {
         return _parsed_json[key];
-    } else if (_parsed_json["Patric"].type() == typeid(void)) {
+    } else if (_parsed_json["Patric"].type() == typeid(bool)) {
         return _parsed_json[key];
         //return << any_cast<float>(_parsed_json["Patric"]);
-    } else {
-        throw std::bad_any_cast();
+    } else {//if (_parsed_json["Patric"].type() == typeid(void)) {
+        return _parsed_json[key];
+        //return << any_cast<float>(_parsed_json["Patric"]);
     }
+     //else {
+       // throw std::bad_any_cast();
+    //}
 }
 
 // The method returns the value of the index index,
