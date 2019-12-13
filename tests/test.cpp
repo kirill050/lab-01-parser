@@ -13,7 +13,7 @@
 using std::string;
 
 TEST(Parse, Text){
-Json object(string("{\n"
+Json object("{\n"
                    "    \"lastname\" : \"Ivanov\",\n"
                    "    \"firstname\" : \"Ivan\",\n"
                    "    \"age\" : 25,\n"
@@ -25,7 +25,7 @@ Json object(string("{\n"
                    "    \t\"city\" : \"Moscow\",\n"
                    "        \"street\" : \"Vozdvijenka\"\n"
                    "    }\n"
-                   "}"));
+                   "}");
 EXPECT_EQ(std::any_cast<std::string>(object["lastname"]),
 "Ivanov");
 EXPECT_EQ(std::any_cast<bool>(object["islegal"]),
