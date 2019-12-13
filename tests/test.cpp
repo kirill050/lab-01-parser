@@ -33,16 +33,18 @@ Json object("{\n"
     EXPECT_EQ(object["age"], 25);
 
     auto marks = object["marks"];
-    EXPECT_EQ(marks[0], 4);
-    EXPECT_EQ(marks[1], 5);
+    EXPECT_EQ(std::any_cast<double>(marks[0]), 4);
+    EXPECT_EQ(std::any_cast<double>(marks[1]), 5);
 
-    auto address = object["address"];
-    EXPECT_EQ(address["city"], "Moscow");
-    EXPECT_EQ(address["street"], "Vozdvijenka");
+    auto address = (object["address"]);
+    EXPECT_EQ(std::any_cast<std::string>(address["city"]),
+    "Moscow");
+    EXPECT_EQ(std::any_cast<std::string>(address["street"]),
+    "Vozdvijenka");
 //}
 //catch (std::bad_any_cast& e)
 //{
-//    cout << "Bad any cast!";
+ //   cout << "Bad any cast!";
 //}
 }
 
