@@ -78,7 +78,7 @@ std::string Json::get_key(std::string& str){
             //cout << key << " ";
             return key;
         } else {
-            throw std::out_of_range;
+            throw std::out_of_range("A");
         }
     } else {
         str.erase(0, str.find("\"")+1);
@@ -88,28 +88,28 @@ std::string Json::get_key(std::string& str){
             //cout << key << " ";
             return key;
         } else {
-            throw std::out_of_range;
+            throw std::out_of_range("B");
         }
     }
 }
 
 std::any Json::parse_object_get_value(std::string& s){
     if ((!s.length()) || (s.find(":") == string::npos))
-        throw std::range_error;
+        throw std::range_error("A");
     any value;
     string pre_value;
     if (s.find(",") != string::npos){
         if (s.find("{") != string::npos){
             if (s.find("{") < s.find(",")){
                 if (s.find("}") == string::npos)
-                    throw std::range_erro;
+                    throw std::range_error("B");
                 pre_value.assign(s, s.find(":")+2, s.find("}")-2);
                 s.erase(0, s.find("}")+1);
             } else if (s.find("[") != string::npos) {
                 if (s.find("[") < s.find(","))
                 {
                     if (s.find("]") == string::npos)
-                        throw std::range_error;
+                        throw std::range_error("C");
                     pre_value.assign(s, s.find(":")+2, s.find("]")-2);
                     s.erase(0, s.find("]")+1);
                 } else {
@@ -124,7 +124,7 @@ std::any Json::parse_object_get_value(std::string& s){
             if (s.find("[") < s.find(","))
             {
                 if (s.find("]") == string::npos)
-                    throw std::range_error;
+                    throw std::range_error("D");
                 pre_value.assign(s, s.find(":")+2, s.find("]")-2);
                 s.erase(0, s.find("]")+1);
             } else {
@@ -214,7 +214,7 @@ std::any Json::parse_object_get_value(std::string& s){
             value = false;
         //cout << "{" << any_cast<bool>(value) << "}";
         else
-            throw std::invalid_argument;
+            throw std::invalid_argument("A");
     } else {
         throw std::bad_function_call;
     }
