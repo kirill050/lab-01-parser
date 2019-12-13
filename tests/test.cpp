@@ -32,11 +32,12 @@ Json object("{\n"
     EXPECT_EQ(object["islegal"], false);
     EXPECT_EQ(object["age"], 25);
 
-    auto marks = object["marks"];
+    auto marks = std::any_cast<std::vector <std::any> >(object["marks"]);
+
     EXPECT_EQ(std::any_cast<double>(marks[0]), 4);
     EXPECT_EQ(std::any_cast<double>(marks[1]), 5);
 
-    auto address = (object["address"]);
+    auto address = std::map <std::string, std::any>(object["address"]);
     EXPECT_EQ(std::any_cast<std::string>(address["city"]),
     "Moscow");
     EXPECT_EQ(std::any_cast<std::string>(address["street"]),
