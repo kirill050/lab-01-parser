@@ -159,7 +159,7 @@ std::any Json::parse_object_get_value(std::string& s){
                 string key = get_key(pre_value);
                 string find_here_a_value;
 
-                MAP[key] = parse_object_get_value(pre_value);
+                MAP[key] = std::any_cast<string>(parse_object_get_value(pre_value));
                 value = MAP;
             }
             catch (string Error)
