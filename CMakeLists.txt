@@ -27,8 +27,12 @@ string(APPEND CMAKE_CXX_FLAGS " -Wshadow -Wnon-virtual-dtor")
 hunter_add_package(GTest)
 find_package(GTest CONFIG REQUIRED)
 
+hunter_add_package(nlohmann_json)
+find_package(nlohmann_json CONFIG REQUIRED)
+
 add_library(JSON_Parser STATIC
   ${CMAKE_CURRENT_SOURCE_DIR}/sources/source.cpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/sources/task3.cpp
 )
 
 add_executable(tests
@@ -42,7 +46,7 @@ target_include_directories(tests
   PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include
 )
 
-target_link_libraries(tests GTest::main JSON_Parser)
+target_link_libraries(tests GTest::main nlohmann_json JSON_Parser)
 
 enable_testing()
 add_test(NAME unit_tests COMMAND tests) 
