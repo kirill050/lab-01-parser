@@ -1,5 +1,6 @@
 // Copyright 2019 Kirill <your_email>
 #include <iostream>
+#define NLOHMANN_JSON_HPP
 #include <nlohmann/json.hpp>
 
 using json = nlohmann::json;
