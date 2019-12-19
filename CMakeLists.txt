@@ -48,6 +48,7 @@ target_include_directories(tests
 
 target_link_libraries(tests GTest::main nlohmann_json JSON_Parser)
 
+
 enable_testing()
 add_test(NAME unit_tests COMMAND tests) 
 
