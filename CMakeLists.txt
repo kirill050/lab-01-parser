@@ -28,10 +28,10 @@ hunter_add_package(GTest)
 find_package(GTest CONFIG REQUIRED)
 
 hunter_add_package(nlohmann_json)
-find_package(nlohmann_json 3.2.0 REQUIRED)
+find_package(nlohmann_json CONFIG REQUIRED)
 
-set(DJSON_MultipleHeaders ON)
-include_directories(${DJSON_INCLUDE_DIRS})
+#set(DJSON_MultipleHeaders ON)
+#include_directories(${DJSON_INCLUDE_DIRS})
 
 add_library(JSON_Parser STATIC
   ${CMAKE_CURRENT_SOURCE_DIR}/sources/source.cpp
@@ -44,9 +44,11 @@ add_executable(tests
 
 target_include_directories(JSON_Parser
   PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include
+  nlohmann_json::nlohmann_json
 )
 target_include_directories(tests 
   PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include
+  nlohmann_json::nlohmann_json
 )
 
 target_link_libraries(tests PUBLIC GTest::main nlohmann_json::nlohmann_json JSON_Parser)
