@@ -28,13 +28,10 @@ hunter_add_package(GTest)
 find_package(GTest CONFIG REQUIRED)
 
 hunter_add_package(nlohmann_json)
-find_package(nlohmann_json CONFIG REQUIRED nlohmann_json)
+find_package(nlohmann_json 3.2.0 REQUIRED)
 
-set(nlohmann_json_USE_STATIC_LIBS ON)
-set(nlohmann_json_USE_MULTITHREADED ON)
-set(nlohmann_json_USE_STATIC_RUNTIME ON)
-FIND_PACKAGE(nlohmann_json REQUIRED COMPONENTS nlohmann_json)
-include_directories(${nlohmann_json_INCLUDE_DIRS})
+set(DJSON_MultipleHeaders ON)
+include_directories(${DJSON_INCLUDE_DIRS})
 
 add_library(JSON_Parser STATIC
   ${CMAKE_CURRENT_SOURCE_DIR}/sources/source.cpp
