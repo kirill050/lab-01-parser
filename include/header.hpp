@@ -63,15 +63,15 @@ public:
                     str.assign(str, str.find(",")+1,
                                      str.length()-1);
 
-                    some_other_string = make_it_without_tabs(
+                    some_other_string = JSON.make_it_without_tabs(
                                                     some_other_string);
 
-                    JSON.Array.push_back(parse_object_get_value(
+                    JSON.Array.push_back(JSON.parse_object_get_value(
                                                     some_other_string));
                     //cout << ", ";
                 }
-                pre_value = make_it_without_tabs(pre_value);
-                JSON.Array.push_back(parse_object_get_value(pre_value));
+                pre_value = JSON.make_it_without_tabs(pre_value);
+                JSON.Array.push_back(JSON.parse_object_get_value(pre_value));
 //                while (str.length() > 5)
 //                {
 //                    try

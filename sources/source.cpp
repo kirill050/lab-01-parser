@@ -160,7 +160,7 @@ std::any Json::parse_object_get_value(std::string& s){
     {
         pre_value.assign(pre_value, pre_value.find("\""),
                           pre_value.length()-2);
-        Json sub_json();
+        Json sub_json;
         sub_json._is_object = true;
         while (pre_value.length() > 5)
         {
@@ -195,7 +195,7 @@ std::any Json::parse_object_get_value(std::string& s){
         pre_value.assign(pre_value, pre_value.find("[")+1,
                          pre_value.rfind('\n')-1);
 
-        Json sub_json();
+        Json sub_json;
         sub_json._is_array = true;
 
         while (pre_value.find(",") != string::npos)
