@@ -41,7 +41,7 @@ public:
 
     static Json parse(const std::string& s)
     {
-        Json JSON(s);
+        return Json(s);
     }
 
     static Json parse(Json& JSON)
