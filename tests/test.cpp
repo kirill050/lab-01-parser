@@ -28,17 +28,17 @@ Json object("{\n"
                    "}");
     EXPECT_EQ(std::any_cast<string>(object[string("lastname")]),
               string("Ivanov"));
-    EXPECT_EQ(std::any_cast<bool>(object.[string("islegal")]), false);
-    EXPECT_EQ(std::any_cast<double>(object.[string("age")]), 25);
+    EXPECT_EQ(std::any_cast<bool>(object[string("islegal")]), false);
+    EXPECT_EQ(std::any_cast<double>(object[string("age")]), 25);
 
     auto marks = std::any_cast<std::vector <std::any>>
-                                   (object.[string("marks")]);
+                                   (object[string("marks")]);
 
     EXPECT_EQ(std::any_cast<double>(marks[0]), 4);
     EXPECT_EQ(std::any_cast<double>(marks[1]), 5);
 
     auto address = std::any_cast<std::map<std::string,
-                         std::string>>(object.[string("address")]);
+                         std::string>>(object[string("address")]);
     EXPECT_EQ(std::any_cast<string>(address[string("city")]),
               string("Moscow"));
     EXPECT_EQ(std::any_cast<string>(address[string("street")]),
