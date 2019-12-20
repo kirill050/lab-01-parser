@@ -4,6 +4,8 @@
 Json::Json(const string& s)
 {
     json_string = s;
+    _is_object = false;
+    _is_array = false;
     Json::parse(*this);
 }
 
@@ -31,24 +33,19 @@ bool Json::is_object(const string &str) const
 //if the instance is a JSON array, an exception is thrown.
 any& Json::operator[](const string& key)
 {
+    if (!_is_object) throw std::bad_any_cast();
     if (_parsed_json[key].type() == typeid(string))
     {
         return _parsed_json[key];
-        //any_cast<const std::string&>(_parsed_json[key]);
     } else if (_parsed_json[key].type() == typeid(double)) {
         return _parsed_json[key];
     } else if (_parsed_json[key].type() == typeid(int)) {
         return _parsed_json[key];
     } else if (_parsed_json["Patric"].type() == typeid(bool)) {
         return _parsed_json[key];
-        //return << any_cast<float>(_parsed_json["Patric"]);
-    } else {//if (_parsed_json["Patric"].type() == typeid(void)) {
+    } else {
         return _parsed_json[key];
-        //return << any_cast<float>(_parsed_json["Patric"]);
     }
-     //else {
-       // throw std::bad_any_cast();
-    //}
 }
 
 // The method returns the value of the index index,
@@ -58,9 +55,22 @@ any& Json::operator[](const string& key)
 // an exception is thrown.
 std::any& Json::operator[](int index)
 {
-    auto it = _parsed_json.begin();
-    advance(it, index);
-    return it->second;
+    if (!_is_array) throw std::bad_any_cast();
+    if (Array[index].type() == typeid(string))
+    {
+        return Array[index];
+    } else if (Array[index].type() == typeid(double)) {
+        return Array[index];
+    } else if (Array[index].type() == typeid(int)) {
+        return Array[index];
+    } else if (Array[index].type() == typeid(bool)) {
+        return Array[index];
+    } else {
+        return Array[index];
+    }
+//    auto it = _parsed_json.begin();
+//    advance(it, index);
+//    return it->second;
 }
 
 std::string Json::make_it_without_tabs(std::string& str){
@@ -73,13 +83,11 @@ std::string Json::make_it_without_tabs(std::string& str){
     return str;
 }
 std::string Json::get_key(std::string& str){
-    //cout << "get key: ";
     if (str.find("\"") != string::npos){
         str.erase(0, str.find("\"")+1);
         if (str.find("\"") != string::npos){
             string key = str.substr(0, str.find("\""));
             str.erase(0, str.find("\"")+1);
-            //cout << key << " ";
             return key;
         } else {
             throw std::out_of_range("A");
@@ -89,18 +97,13 @@ std::string Json::get_key(std::string& str){
         if (str.find("\"") != string::npos){
             string key = str.substr(0, str.find("\""));
             str.erase(0, str.find("\"")+1);
-            //cout << key << " ";
             return key;
         } else {
             throw std::out_of_range("B");
         }
     }
 }
-
-std::any Json::parse_object_get_value(std::string& s){
-    if ((!s.length()) || (s.find(":") == string::npos))
-        throw std::range_error("A");
-    any value;
+std::string prepare_Pre_Value(std::string& s){
     string pre_value;
     if (s.find(",") != string::npos){
         if (s.find("{") != string::npos){
@@ -144,14 +147,21 @@ std::any Json::parse_object_get_value(std::string& s){
         pre_value.erase(0, pre_value.find(":")+2);
         s = "";
     }
+    return pre_value;
+}
+std::any Json::parse_object_get_value(std::string& s){
+    if ((!s.length()) || (s.find(":") == string::npos))
+        throw std::range_error("A");
 
-    if (is_object(pre_value))//pre_value[0] == '{')
+    any value;
+    string pre_value = prepare_Pre_Value(s);
+
+    if (pre_value[0] == '{')
     {
         pre_value.assign(pre_value, pre_value.find("\""),
                           pre_value.length()-2);
-        //Json sub_object(pre_value);
-        //value = sub_object;
-        map <string, string> MAP;
+        Json sub_json;
+        sub_json._is_object = true;
         while (pre_value.length() > 5)
         {
             try
@@ -159,13 +169,12 @@ std::any Json::parse_object_get_value(std::string& s){
                 string key = get_key(pre_value);
                 string find_here_a_value;
 
-                MAP[key] = std::any_cast<string>
+                sub_json._parsed_json[key] = std::any_cast<string>
                                 (parse_object_get_value(pre_value));
-                value = MAP;
             }
             catch (string Error)
             {
-                //cout << endl << "Error occured: " << Error << endl;
+                cout << endl << "Error occured: " << Error << endl;
                 if (Error == "No keys!")
                 {
                     value = -1;
@@ -181,13 +190,14 @@ std::any Json::parse_object_get_value(std::string& s){
                 return value;
             }
         }
-    } else if (is_array(pre_value)) {
+        value = sub_json;
+    } else if (pre_value[0] == '[') {
         pre_value.assign(pre_value, pre_value.find("[")+1,
                          pre_value.rfind('\n')-1);
 
-        std::vector <std::any> Array;
+        Json sub_json;
+        sub_json._is_array = true;
 
-        //cout << "=[";
         while (pre_value.find(",") != string::npos)
         {
             string some_other_string;
@@ -197,29 +207,24 @@ std::any Json::parse_object_get_value(std::string& s){
 
             some_other_string = make_it_without_tabs(some_other_string);
 
-            Array.push_back(parse_object_get_value(some_other_string));
-            //cout << ", ";
+            sub_json.Array.push_back(parse_object_get_value(some_other_string));
         }
         pre_value = make_it_without_tabs(pre_value);
-        Array.push_back(parse_object_get_value(pre_value));
+        sub_json.Array.push_back(parse_object_get_value(pre_value));
 
-        //cout << "]";
-        value = Array;
+        value = sub_json;
     } else if (pre_value.find("\"") != string::npos) {
         pre_value.assign(pre_value, pre_value.find("\"")+1,
                          pre_value.rfind("\"")-1);
         value = pre_value;
-        //cout << "\"" << pre_value << "\"";
     } else if ((pre_value[0] >= NUM_ST)&&
               (pre_value[pre_value.length()-1] <= NUM_FIN)) {
         value = atof(pre_value.c_str());
-        //cout << "<" << any_cast<double>(value) << ">";
     } else if ((pre_value == "true") || (pre_value == "false")) {
         if (pre_value == "true")
             value = true;
         else if (pre_value == "false")
             value = false;
-        //cout << "{" << any_cast<bool>(value) << "}";
         else
             throw std::invalid_argument("A");
     } else {

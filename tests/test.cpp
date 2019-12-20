@@ -1,7 +1,7 @@
 // Copyright 2019 Kirill <your_email>
 
 #include <gtest/gtest.h>
-#include "header.hpp"
+#include <header.hpp>
 #include <iostream>
 #include <string>
 #include <any>
@@ -26,26 +26,21 @@ Json object("{\n"
                    "        \"street\" : \"Vozdvijenka\"\n"
                    "    }\n"
                    "}");
-//try
-//{
-    //EXPECT_EQ(std::any_cast<string>(object["lastname"]), "Ivanov");
-    //EXPECT_EQ(std::any_cast<bool>(object["islegal"]), false);
-    //EXPECT_EQ(std::any_cast<double>(object["age"]), 25);
+    EXPECT_EQ(std::any_cast<string>(object[string("lastname")]),
+              string("Ivanov"));
+    EXPECT_EQ(std::any_cast<bool>(object[string("islegal")]), false);
+    EXPECT_EQ(std::any_cast<double>(object[string("age")]), 25);
 
-    auto marks = std::any_cast<std::vector <std::any> >(object["marks"]);
+    auto marks = std::any_cast<Json>(object[string("marks")]);
 
     EXPECT_EQ(std::any_cast<double>(marks[0]), 4);
     EXPECT_EQ(std::any_cast<double>(marks[1]), 5);
 
-    auto address = std::any_cast<std::map<std::string,
-                                   std::string>>(object["address"]);
-    EXPECT_EQ(std::any_cast<string>(address["city"]), "Moscow");
-    EXPECT_EQ(std::any_cast<string>(address["street"]), "Vozdvijenka");
-//}
-//catch (std::bad_any_cast& e)
-//{
- //   cout << "Bad any cast!";
-//}
+    auto address = std::any_cast<Json>(object[string("address")]);
+    EXPECT_EQ(std::any_cast<string>(address[string("city")]),
+              string("Moscow"));
+    EXPECT_EQ(std::any_cast<string>(address[string("street")]),
+              string("Vozdvijenka"));
 }
 
 int main(int argc, char **argv) {
