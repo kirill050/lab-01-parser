@@ -31,33 +31,16 @@ Json object("{\n"
     EXPECT_EQ(std::any_cast<bool>(object[string("islegal")]), false);
     EXPECT_EQ(std::any_cast<double>(object[string("age")]), 25);
 
-    auto marks = std::any_cast<std::vector <std::any>>
-                                   (object[string("marks")]);
+    auto marks = std::any_cast<Json>(object[string("marks")]);
 
     EXPECT_EQ(std::any_cast<double>(marks[0]), 4);
     EXPECT_EQ(std::any_cast<double>(marks[1]), 5);
 
-    auto address = std::any_cast<std::map<std::string,
-                         std::string>>(object[string("address")]);
+    auto address = std::any_cast<Json>(object[string("address")]);
     EXPECT_EQ(std::any_cast<string>(address[string("city")]),
               string("Moscow"));
     EXPECT_EQ(std::any_cast<string>(address[string("street")]),
               string("Vozdvijenka"));
-//
-//    EXPECT_EQ(std::any_cast<string>(object["lastname"]), "Ivanov");
-//    EXPECT_EQ(std::any_cast<bool>(object._parsed_json["islegal"]), false);
-//    EXPECT_EQ(std::any_cast<double>(object._parsed_json["age"]), 25);
-//
-//    auto marks = std::any_cast<std::vector <std::any>>
-//                                   (object._parsed_json["marks"]);
-//
-//    EXPECT_EQ(std::any_cast<double>(marks[0]), 4);
-//    EXPECT_EQ(std::any_cast<double>(marks[1]), 5);
-//
-//    auto address = std::any_cast<std::map<std::string,
-//                         std::string>>(object._parsed_json["address"]);
-//    EXPECT_EQ(std::any_cast<string>(address["city"]), "Moscow");
-//    EXPECT_EQ(std::any_cast<string>(address["street"]), "Vozdvijenka");
 }
 
 int main(int argc, char **argv) {

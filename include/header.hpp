@@ -22,6 +22,10 @@ using std::any;
 
 class Json {
 public:
+    Json(){
+        _is_object = false;
+        _is_array = false;
+    }
     explicit Json(const string& s);
     bool is_array(const string &str) const;
     bool is_object(const string &str) const;
@@ -37,34 +41,7 @@ public:
 
     static Json parse(const std::string& s)
     {
-        string str;
-        try
-        {
-            Json JSON(s);
-            str.assign(s, 1, s.length()-2);
-
-            while (str.length() > 5)
-            {
-                try
-                {
-                    string key = JSON.get_key(str);
-                    JSON._parsed_json[key] =
-                                       JSON.parse_object_get_value(str);
-                    //cout << endl;
-                }
-                catch (string Error)
-                {
-                    //cout << endl << "Error occured: " << Error << endl;
-                    break;
-                }
-            }
-            return JSON;
-        }
-        catch (std::bad_any_cast())
-        {
-            cout << "This is not a Json-object or Json-array!" << endl;
-            return Json(string(""));
-        }
+        Json JSON(s);
     }
 
     static Json parse(Json& JSON)
@@ -74,20 +51,56 @@ public:
         {
             str.assign(JSON.json_string, 1,
                        JSON.json_string.length()-2);
-
-            while (str.length() > 5)
+            if (str[0] == '[')
             {
-                try
+                _is_array = true;
+                str.assign(str, str.find("[")+1,
+                         str.rfind('\n')-1);
+                while (str.find(",") != string::npos)
                 {
-                    string key = JSON.get_key(str);
-                    JSON._parsed_json[key] =
-                                       JSON.parse_object_get_value(str);
-                    //cout << endl;
+                    string some_other_string;
+                    some_other_string.assign(str, 0, str.find(","));
+                    str.assign(str, str.find(",")+1,
+                                     str.length()-1);
+
+                    some_other_string = make_it_without_tabs(
+                                                    some_other_string);
+
+                    JSON.Array.push_back(parse_object_get_value(
+                                                    some_other_string));
+                    //cout << ", ";
                 }
-                catch (string Error)
+                pre_value = make_it_without_tabs(pre_value);
+                JSON.Array.push_back(parse_object_get_value(pre_value));
+//                while (str.length() > 5)
+//                {
+//                    try
+//                    {
+//                        JSON.Array.push_back(
+//                                JSON.parse_object_get_value(str));
+//                    }
+//                    catch (string Error)
+//                    {
+//                        cout << endl << "Error occured: " << Error << endl;
+//                        break;
+//                    }
+//                }
+
+            } else {
+                _is_object = true;
+                while (str.length() > 5)
                 {
-                    //cout << endl << "Error occured: " << Error << endl;
-                    break;
+                    try
+                    {
+                        string key = JSON.get_key(str);
+                        JSON._parsed_json[key] =
+                                       JSON.parse_object_get_value(str);
+                    }
+                    catch (string Error)
+                    {
+                        cout << endl << "Error occured: " << Error << endl;
+                        break;
+                    }
                 }
             }
             return JSON;
@@ -121,7 +134,9 @@ public:
 
 public:
     std::string json_string;
+    bool _is_object;
     std::map <std::string, std::any> _parsed_json;
-    //std::vector <std::any> Array;
+    bool _is_array;
+    std::vector <std::any> Array;
 };
 #endif // INCLUDE_HEADER_HPP_
