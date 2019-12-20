@@ -13,9 +13,9 @@ int main() {
                           "\"Futures contract for index RTS\", "
                           "\"Futures contract for Gazprom shares\"]\n"
                           "]");
-    unsigned long tmp;
+    uint64_t tmp;
 
-    for (unsigned long i = 0; i < j3[0].size(); ++i) {
+    for (uint64_t i = 0; i < j3[0].size(); ++i) {
         tmp = 0;
         while (tmp < j3.size()) {
             outputJson.push_back(
