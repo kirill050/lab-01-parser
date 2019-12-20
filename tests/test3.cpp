@@ -29,8 +29,3 @@ nlohmann::json outputJson;
     }
     std::cout << outputJson;
 }
-
-int main(int argc, char **argv) {
-    ::testing::InitGoogleTest(&argc, argv);
-    return RUN_ALL_TESTS();
-}
