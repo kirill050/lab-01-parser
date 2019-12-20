@@ -24,8 +24,7 @@ int main() {
                                     {"ticker",      j3[tmp++][i]},
                                     {"id",          j3[tmp++][i]},
                                     {"description", j3[tmp++][i]},
-                            }
-            );
+                            });
         }
     }
     std::cout << outputJson;
