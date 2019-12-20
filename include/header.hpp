@@ -53,7 +53,7 @@ public:
                        JSON.json_string.length()-2);
             if (str[0] == '[')
             {
-                _is_array = true;
+                JSON._is_array = true;
                 str.assign(str, str.find("[")+1,
                          str.rfind('\n')-1);
                 while (str.find(",") != string::npos)
@@ -87,7 +87,7 @@ public:
 //                }
 
             } else {
-                _is_object = true;
+                JSON._is_object = true;
                 while (str.length() > 5)
                 {
                     try
