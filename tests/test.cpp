@@ -26,8 +26,6 @@ Json object("{\n"
                    "        \"street\" : \"Vozdvijenka\"\n"
                    "    }\n"
                    "}");
-//try
-//{
 
     EXPECT_EQ(std::any_cast<string>(object._parsed_json["lastname"]), "Ivanov");
     EXPECT_EQ(std::any_cast<bool>(object._parsed_json["islegal"]), false);
@@ -43,11 +41,34 @@ Json object("{\n"
                          std::string>>(object._parsed_json["address"]);
     EXPECT_EQ(std::any_cast<string>(address["city"]), "Moscow");
     EXPECT_EQ(std::any_cast<string>(address["street"]), "Vozdvijenka");
-//}
-//catch (std::bad_any_cast& e)
-//{
- //   cout << "Bad any cast!";
-//}
+}
+
+using json = nlohmann::json;
+
+TEST1(nlohmann, Text){
+nlohmann::json outputJson;
+    auto j3 = json::parse("[\n"
+                          "    [\"Si-9.15\", \"RTS-9.15\", \"GAZP-9.15\"],\n"
+                          "    [100024, 100027, 100050],\n"
+                          "    [\"Futures contract for USD/RUB\", "
+                          "\"Futures contract for index RTS\", "
+                          "\"Futures contract for Gazprom shares\"]\n"
+                          "]");
+    uint64_t tmp;
+
+    for (uint64_t i = 0; i < j3[0].size(); ++i) {
+        tmp = 0;
+        while (tmp < j3.size()) {
+            outputJson.push_back(
+                    nlohmann::json
+                            {
+                                    {"ticker",      j3[tmp++][i]},
+                                    {"id",          j3[tmp++][i]},
+                                    {"description", j3[tmp++][i]},
+                            });
+        }
+    }
+    std::cout << outputJson;
 }
 
 int main(int argc, char **argv) {
