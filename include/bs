@@ -1,5 +1,5 @@
 #!/bin/bash
 
-sed 's/\t/    /g' header.hpp > header1.hpp
-rm header.hpp
-mv header1.hpp header.hpp
+sed 's/\t/    /g' json.hpp > json1.hpp
+rm json.hpp
+mv json1.hpp json.hpp
