@@ -13,9 +13,9 @@ int main() {
                           "\"Futures contract for index RTS\", "
                           "\"Futures contract for Gazprom shares\"]\n"
                           "]");
-    int tmp;
+    unsigned long tmp;
 
-    for (int i = 0; i < j3[0].size(); ++i) {
+    for (unsigned long i = 0; i < j3[0].size(); ++i) {
         tmp = 0;
         while (tmp < j3.size()) {
             outputJson.push_back(
@@ -25,7 +25,7 @@ int main() {
                                     {"id",          j3[tmp++][i]},
                                     {"description", j3[tmp++][i]},
                             }
-            )
+            );
         }
     }
     std::cout << outputJson;
