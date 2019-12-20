@@ -4,7 +4,7 @@
 
 using json = nlohmann::json;
 
-TEST(Json_for_modern, parse_)){
+TEST(Json_for_modern, parse_){
 nlohmann::json outputJson;
     auto j3 = json::parse("[\n"
                           "    [\"Si-9.15\", \"RTS-9.15\", \"GAZP-9.15\"],\n"
