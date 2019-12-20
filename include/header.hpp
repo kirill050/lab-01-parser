@@ -70,8 +70,8 @@ public:
                                                     some_other_string));
                     //cout << ", ";
                 }
-                pre_value = JSON.make_it_without_tabs(pre_value);
-                JSON.Array.push_back(JSON.parse_object_get_value(pre_value));
+                str = JSON.make_it_without_tabs(str);
+                JSON.Array.push_back(JSON.parse_object_get_value(str));
 //                while (str.length() > 5)
 //                {
 //                    try
