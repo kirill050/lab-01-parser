@@ -1,9 +1,4 @@
-# Factory line manager
 [![Travis][build-badge]][build]
-[![Coveralls][coveralls-badge]][coveralls]
-
-Awesome factory line manager!
-
 [build-badge]: https://img.shields.io/travis/kirill050/lab-01-parser/master.png?style=flat-square
 [build]: https://travis-ci.org/kirill050/lab-01-parser
 # Задание 1
